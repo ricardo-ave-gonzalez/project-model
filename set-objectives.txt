@@ -1,0 +1,14 @@
+Funcion                                 34
+Funcion Lineal                          35
+Funciones lineales por tramo            51
+Funcion cuadratica                      54
+Funciones por tramos                    66
+Funcion Polinomica                      66
+Concepto Funcion Racional               81
+Funcion Irracional                      90
+Dominio de la funcion resultante        104
+Funcion inversa                         113
+Funcion exponencial                     118
+Funcion logaritmica                     122
+Ecuacion exponencial                    125
+Ecuaciones logaritmicas                 126
