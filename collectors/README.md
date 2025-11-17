@@ -108,14 +108,13 @@ construir APIs sobre la base consolidada
 │   ├── extractor_zabbix.sh
 │   └── extractor_infra.sh   ← loader central
 │
-├── nagioscfg/
-│   └── dbs/
-│       ├── infra.db         ← base SQLite principal
-│       └── csv/
-│           ├── infra_chmk.csv
-│           ├── infra_orion.csv
-│           ├── infra_zabbix.csv
-│           └── ...
+├── dbs/
+│   └── infra.db /
+│   └── csv/
+│       ├── infra_chmk.csv
+│       ├── infra_orion.csv
+│       ├── infra_zabbix.csv
+│       └── ...
 │
 └── logsscripts/
     └── clean_infra_*.csv    ← CSVs normalizados listo para importarse
