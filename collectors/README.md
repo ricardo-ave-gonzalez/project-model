@@ -19,10 +19,10 @@ Esto permite que cualquier integración nueva se conecte al sistema sin modifica
 Each integration (CheckMK, Zabbix, Orion, Windows, etc.) has its own dedicated extractor script:
 Cada integración (CheckMK, Zabbix, Orion, Windows, etc.) implementa su propio script:
 ```
-extractor_${INTEGRACION}.sh
-extractor_${INTEGRACION}.sh
-extractor_${INTEGRACION}.sh
-extractor_${INTEGRACION}.sh
+extractor_${INTEGRATION}.sh
+extractor_${INTEGRATION}.sh
+extractor_${INTEGRATION}.sh
+extractor_${INTEGRATION}.sh
 ...
 ```
 
@@ -31,7 +31,7 @@ reads its original input (CSV, API, remote command output)
 cleans and normalizes data (comma → dot, removing noise, fix formatting)
 generates a standardized CSV:
 ```
-../csv/infra_${INTEGRACION}.csv
+../csv/infra_${INTEGRATION}.csv
 ```
 
 Adding a new data source only requires dropping in a new extractor.
