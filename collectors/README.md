@@ -32,7 +32,7 @@ limpia y normaliza datos (coma → punto, noise → limpio)
 
 genera un CSV estandarizado:
 
-/usr/lib/nagios/plugins/nagioscfg/dbs/csv/infra_${INTEGRACION}.csv
+../csv/infra_${INTEGRACION}.csv
 
 
 Así, agregar una nueva fuente solo requiere crear un nuevo extractor.
@@ -97,7 +97,7 @@ extender el modelo de predicción
 generar dashboards históricos
 crear alertas basadas en tendencia
 construir APIs sobre la base consolidada
-
+```
 📦 Estructura final del sistema
 /usr/lib/nagios/plugins/
 │
