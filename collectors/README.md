@@ -1,104 +1,92 @@
-📌 Objetivos alcanzados
-✔ 1. Estructura de datos unificada
+📌 Achievements
+✔ 1. Unified data structure
 
-Se definió un formato estándar para todas las fuentes:
-
+A standard format was defined for all sources:
+```
 timestamp;host;service;valor
+```
 
-
-Ejemplo:
-
+Example:
+```
 2025-11-16T21:28:45;HBTM03;/rpool;27.31
+```
 
-
+This ensures that any new source can be integrated without modifying the pipeline.
 Esto permite que cualquier integración nueva se conecte al sistema sin modificar el pipeline.
 
-✔ 2. Extractores modulares
+✔ 2. Modular extractors
 
+Each integration (CheckMK, Zabbix, Orion, Windows, etc.) has its own dedicated extractor script:
 Cada integración (CheckMK, Zabbix, Orion, Windows, etc.) implementa su propio script:
-
+```
 extractor_${INTEGRACION}.sh
 extractor_${INTEGRACION}.sh
 extractor_${INTEGRACION}.sh
 extractor_${INTEGRACION}.sh
 ...
+```
 
-
-Cada extractor:
-
-lee su fuente original (CSV, API, comandos remotos)
-
-limpia y normaliza datos (coma → punto, noise → limpio)
-
-genera un CSV estandarizado:
-
+Each extractor:
+reads its original input (CSV, API, remote command output)
+cleans and normalizes data (comma → dot, removing noise, fix formatting)
+generates a standardized CSV:
+```
 ../csv/infra_${INTEGRACION}.csv
+```
 
+Adding a new data source only requires dropping in a new extractor.
 
-Así, agregar una nueva fuente solo requiere crear un nuevo extractor.
-
-✔ 3. Capa de integración centralizada (loader a SQLite3)
-
-Un único script integra todos los datos:
-
+✔ 3. Centralized integration layer (SQLite loader)
+A single script performs the integration:
+```
 extractor_infra.sh
+```
 
+Responsibilities:
+creates the table if it does not exist
+iterates through all infra_*.csv files
+automatically imports each CSV into SQLite
+no changes needed when new extractors are added
 
-Responsable de:
-
-crear la tabla si no existe
-
-recorrer todos los infra_*.csv
-
-importar automáticamente cada CSV a SQLite
-
-sin necesidad de modificar el loader cuando se suman nuevas fuentes
-
-Ejemplo de tabla:
-
+Table structure:
+```
 CREATE TABLE IF NOT EXISTS discos (
     timestamp TEXT NOT NULL,
     host TEXT NOT NULL,
     service TEXT NOT NULL,
     valor REAL NOT NULL
 );
+```
+✔ 4. Efficient SQLite persistence
 
-✔ 4. Persistencia eficiente en SQLite
+The database is stored at:
+```
+/usr/lib/nagios/plugins/INFRA/dbs/infra.db
+```
 
-La base de datos queda en:
+Benefits:
+    very fast queries
+    ideal for medium-sized time-series datasets
+    easy export capabilities
+    perfect foundation for trend prediction and historical analysis
 
-/usr/lib/nagios/plugins/nagioscfg/dbs/infra.db
+✔ 5. Pipeline - Extremely fast processing
 
+The old pipeline processed large files slowly.
+    The new architecture:
+    processes thousands of lines in under one second
+    uses optimized grep, awk, and sed pipelines
+    imports efficiently into SQLite
 
-Ventajas:
+✔ 6. Future-proof scalability
 
-consultas muy rápidas
+This design allows:
+    adding new integrations with zero impact
+    extending prediction models
+    building historical dashboards
+    creating intelligent alerts based on trend changes
 
-excelente para series temporales medianas
-
-fácil exportación a CSV o integración con otros sistemas
-
-ideal para cálculos de tendencia, pronóstico y análisis histórico
-
-✔ 5. Pipeline rápido
-
-El sistema previo procesaba archivos enormes de forma lenta.
-La nueva arquitectura:
-
-procesa miles de líneas en menos de 1 segundo, gracias a grep, awk y sed bien implementados
-
-importa de manera directa y eficiente a SQLite
-
-✔ 6. Escalabilidad futura garantizada
-
-Ahora la estructura permite:
-agregar nuevas integraciones sin alterar el sistema
-extender el modelo de predicción
-generar dashboards históricos
-crear alertas basadas en tendencia
-construir APIs sobre la base consolidada
-
-📦 Estructura final del sistema
+📦 Final system structure
 ```
 /usr/lib/nagios/plugins/
 │
@@ -120,26 +108,24 @@ construir APIs sobre la base consolidada
     └── clean_infra_*.csv    ← CSVs normalizados listo para importarse
 ```
 
-🔮 Próximos pasos sugeridos
+🔮 Recommended next steps
 
-Agregar índices (host, service, timestamp) para acelerar análisis históricos
-
-Crear una función de predicción (tendencia lineal mínima)
-
-Detectar cambios bruscos de consumo
-
-Generar alertas inteligentes tipo:
-
-WARNING - El disco se llenará en 148 días (82.3%)
-CRITICAL - Cambio de tendencia detectado, se llenará en < 1 día
+Add indexes (host, service, timestamp) for faster historical queries
+Implement a trend-prediction function (simple linear regression)
+Detect abrupt consumption spikes
+Add smart alerts, such as:
+```
+WARNING – Disk will fill in 148 days (82.3%)
+CRITICAL – Trend change detected, disk will fill in < 1 day
+```
 
 🎉 Conclusión
 
-El sistema implementado proporciona:
+    The implemented architecture provides:
+    real modularity
+    excellent performance
+    uniform data format
+    robust and extensible pipeline
+    a solid foundation for prediction and analytics
 
-modularidad real
-performance excelente
-formato de datos uniforme
-pipeline robusto y extensible
-base sólida para predicción y análisis
-Se estableció una arquitectura profesional que permite sumar cualquier integración sin afectar el resto del sistema.
+
