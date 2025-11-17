@@ -97,8 +97,9 @@ extender el modelo de predicción
 generar dashboards históricos
 crear alertas basadas en tendencia
 construir APIs sobre la base consolidada
-```
+
 📦 Estructura final del sistema
+```
 /usr/lib/nagios/plugins/
 │
 ├── collectors/
@@ -118,6 +119,7 @@ construir APIs sobre la base consolidada
 │
 └── logsscripts/
     └── clean_infra_*.csv    ← CSVs normalizados listo para importarse
+```
 
 🔮 Próximos pasos sugeridos
 
