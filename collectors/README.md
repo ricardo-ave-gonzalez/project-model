@@ -1,4 +1,4 @@
-📌 Achievements
+Achievements
 ✔ 1. Unified data structure
 
 A standard format was defined for all sources:
@@ -98,7 +98,7 @@ This design allows:
     building historical dashboards
     creating intelligent alerts based on trend changes
 
-📦 Final system structure
+Final system structure
 ```
 /usr/lib/nagios/plugins/
 │
@@ -131,7 +131,7 @@ WARNING – Disk will fill in 148 days (82.3%)
 CRITICAL – Trend change detected, disk will fill in < 1 day
 ```
 
-🎉 Conclusión
+Conclusión
 
     The implemented architecture provides:
     real modularity
