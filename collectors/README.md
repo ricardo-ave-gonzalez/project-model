@@ -87,8 +87,8 @@ Esto permite que cualquier integración nueva se conecte al sistema sin modifica
 
 ✔ 2. Modular extractors
 
-Each integration (CheckMK, Zabbix, Orion, Windows, etc.) has its own dedicated extractor script:
-Cada integración (CheckMK, Zabbix, Orion, Windows, etc.) implementa su propio script:
+Each integration (AWS, Azure, CheckMK, Zabbix, Orion, Windows, etc.) has its own dedicated extractor script:
+Cada integración (AWS, Azure, CheckMK, Zabbix, Orion, Windows, etc.) implementa su propio script:
 ```
 extractor_${INTEGRATION}.sh
 extractor_${INTEGRATION}.sh
