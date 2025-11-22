@@ -3,7 +3,7 @@
 
 A standard format was defined for all sources:
 ```
-timestamp;host;service;valor
+timestamp;host;disk;valor
 ```
 
 Example:
