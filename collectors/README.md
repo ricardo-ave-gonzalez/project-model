@@ -3,7 +3,7 @@ Achievements
 
 A standard format was defined for all sources:
 ```
-timestamp;host;disk;valor
+timestamp;host;disk;value
 ```
 
 Example:
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS discos (
     timestamp TEXT NOT NULL,
     host TEXT NOT NULL,
     disk TEXT NOT NULL,
-    valor REAL NOT NULL
+    value REAL NOT NULL
 );
 ```
 ✔ 4. Efficient SQLite persistence
