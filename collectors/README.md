@@ -65,7 +65,7 @@ Table structure:
 CREATE TABLE IF NOT EXISTS discos (
     timestamp TEXT NOT NULL,
     host TEXT NOT NULL,
-    service TEXT NOT NULL,
+    disk TEXT NOT NULL,
     valor REAL NOT NULL
 );
 ```
@@ -122,7 +122,7 @@ This design allows:
 
 🔮 Recommended next steps
 
-Add indexes (host, service, timestamp) for faster historical queries
+Add indexes (host, disk, timestamp) for faster historical queries
 Implement a trend-prediction function (simple linear regression)
 Detect abrupt consumption spikes
 Add smart alerts, such as:
