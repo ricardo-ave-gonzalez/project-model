@@ -2,148 +2,127 @@
 import pandas as pd
 import numpy as np
 import pwlf
-
-# -----------------------------------------------------
-# Load data from string or file
-# -----------------------------------------------------
-
-data_str = """2025-11-16T21:28:45;SERVER-LINUX-01;/;27.31
-2025-11-16T21:28:45;SERVER-LINUX-02;/;23.12
-2025-11-16T21:28:45;SERVER-LINUX-03;/;77.77
-2025-11-16T21:28:45;SERVER-LINUX-01;/opt;2.31
-2025-11-16T21:28:45;SERVER-LINUX-02;/opt;12.12
-2025-11-16T21:28:45;SERVER-LINUX-03;/opt;17.77
-2025-11-16T21:28:45;SERVER-WINDOWS-01;:C;22.31
-2025-11-16T21:28:45;SERVER-WINDOWS-02;:C;19.12
-2025-11-16T21:28:45;SERVER-WINDOWS-03;:C;29.77
-2025-11-16T21:28:45;SERVER-WINDOWS-01;:E;1.31
-2025-11-16T21:28:45;SERVER-WINDOWS-02;:E;1.12
-2025-11-16T21:28:45;SERVER-WINDOWS-03;:E;20.67
-2025-11-16T21:33:45;SERVER-LINUX-01;/;27.31
-2025-11-16T21:33:45;SERVER-LINUX-02;/;23.12
-2025-11-16T21:33:45;SERVER-LINUX-03;/;77.77
-2025-11-16T21:33:45;SERVER-LINUX-01;/opt;2.31
-2025-11-16T21:33:45;SERVER-LINUX-02;/opt;12.12
-2025-11-16T21:33:45;SERVER-LINUX-03;/opt;18.77
-2025-11-16T21:33:45;SERVER-WINDOWS-01;:C;22.31
-2025-11-16T21:33:45;SERVER-WINDOWS-02;:C;19.12
-2025-11-16T21:33:45;SERVER-WINDOWS-03;:C;29.77
-2025-11-16T21:33:45;SERVER-WINDOWS-01;:E;1.31
-2025-11-16T21:33:45;SERVER-WINDOWS-02;:E;1.12
-2025-11-16T21:33:45;SERVER-WINDOWS-03;:E;20.67
-2025-11-16T21:38:45;SERVER-LINUX-01;/;27.31
-2025-11-16T21:38:45;SERVER-LINUX-02;/;23.12
-2025-11-16T21:38:45;SERVER-LINUX-03;/;77.77
-2025-11-16T21:38:45;SERVER-LINUX-01;/opt;2.31
-2025-11-16T21:38:45;SERVER-LLINUX-02;/opt;12.12
-2025-11-16T21:38:45;SERVER-LINUX-03;/opt;19.77
-2025-11-16T21:38:45;SERVER-WINDOWS-01;:C;22.31
-2025-11-16T21:38:45;SERVER-WINDOWS-02;:C;19.12
-2025-11-16T21:38:45;SERVER-WINDOWS-03;:C;29.77
-2025-11-16T21:38:45;SERVER-WINDOWS-01;:E;1.31
-2025-11-16T21:38:45;SERVER-WINDOWS-02;:E;1.12
-2025-11-16T21:38:45;SERVER-WINDOWS-03;:E;20.67
-2025-11-16T21:43:45;SERVER-LINUX-01;/;27.31
-2025-11-16T21:43:45;SERVER-LINUX-02;/;23.12
-2025-11-16T21:43:45;SERVER-LINUX-03;/;77.77
-2025-11-16T21:43:45;SERVER-LINUX-01;/opt;2.31
-2025-11-16T21:43:45;SERVER-LINUX-02;/opt;12.12
-2025-11-16T21:43:45;SERVER-LINUX-03;/opt;29.77
-2025-11-16T21:43:45;SERVER-WINDOWS-01;:C;22.31
-2025-11-16T21:43:45;SERVER-WINDOWS-02;:C;19.12
-2025-11-16T21:43:45;SERVER-WINDOWS-03;:C;29.77
-2025-11-16T21:43:45;SERVER-WINDOWS-01;:E;1.31
-2025-11-16T21:43:45;SERVER-WINDOWS-02;:E;1.12
-2025-11-16T21:43:45;SERVER-WINDOWS-03;:E;20.67
-2025-11-16T21:48:45;SERVER-LINUX-01;/;27.31
-2025-11-16T21:48:45;SERVER-LINUX-02;/;23.12
-2025-11-16T21:48:45;SERVER-LINUX-03;/;77.77
-2025-11-16T21:48:45;SERVER-LINUX-01;/opt;2.31
-2025-11-16T21:48:45;SERVER-LINUX-02;/opt;12.12
-2025-11-16T21:48:45;SERVER-LINUX-03;/opt;39.77
-2025-11-16T21:48:45;SERVER-WINDOWS-01;:C;22.31
-2025-11-16T21:48:45;SERVER-WINDOWS-02;:C;19.12
-2025-11-16T21:48:45;SERVER-WINDOWS-03;:C;29.77
-2025-11-16T21:48:45;SERVER-WINDOWS-01;:E;1.31
-2025-11-16T21:48:45;SERVER-WINDOWS-02;:E;1.12
-2025-11-16T21:48:45;SERVER-WINDOWS-03;:E;20.67
-2025-11-16T21:53:45;SERVER-LINUX-01;/;27.31
-2025-11-16T21:53:45;SERVER-LINUX-02;/;23.12
-2025-11-16T21:53:45;SERVER-LINUX-03;/;77.77
-2025-11-16T21:53:45;SERVER-LINUX-01;/opt;2.31
-2025-11-16T21:53:45;SERVER-LINUX-02;/opt;12.12
-2025-11-16T21:53:45;SERVER-LINUX-03;/opt;49.77
-2025-11-16T21:53:45;SERVER-WINDOWS-01;:C;22.31
-2025-11-16T21:53:45;SERVER-WINDOWS-02;:C;19.12
-2025-11-16T21:53:45;SERVER-WINDOWS-03;:C;29.77
-2025-11-16T21:53:45;SERVER-WINDOWS-01;:E;1.31
-2025-11-16T21:53:45;SERVER-WINDOWS-02;:E;1.12
-2025-11-16T21:53:45;SERVER-WINDOWS-03;:E;20.67
-"""
-
-# Convert string into dataframe
+import subprocess
+import datetime
 from io import StringIO
-df = pd.read_csv(StringIO(data_str), sep=';', header=None,
-                 names=["timestamp", "server", "disk", "usage"])
 
-# Convert timestamp to datetime
+# -----------------------------------------------------
+# load data from SQLite
+# -----------------------------------------------------
+cmd = [
+    "sqlite3",
+    "/usr/lib/nagios/plugins/nagioscfg/dbs/infra.db",
+    "select * from discos"
+]
+
+output = subprocess.check_output(cmd).decode().strip()
+
+df = pd.read_csv(
+    StringIO(output),
+    sep="|",
+    header=None,
+    names=["timestamp", "server", "disk", "usage"]
+)
+
 df["timestamp"] = pd.to_datetime(df["timestamp"])
-
-print("\nLoaded data:")
-print(df.head())
+df = df.sort_values("timestamp")
 
 # -----------------------------------------------------
-# Function to detect trend change
+# trend analysis function
 # -----------------------------------------------------
-def analyze_trend(series):
-    y = series["usage"].values
+def analyze_trend(group):
+    y = group["usage"].values
     x = np.arange(len(y))
 
-    # If not enough data, skip segmentation
+    # Requires minimum 4 points
     if len(y) < 4:
         return None
 
     model = pwlf.PiecewiseLinFit(x, y)
-    breaks = model.fit(2)      # two segments
+    breaks = model.fit(2)
     slopes = model.slopes
 
     return {
         "breaks": breaks,
-        "slopes": slopes,
-        "slope_change": slopes[-1] - slopes[-2],
-        "slope_ratio": slopes[-1] / slopes[-2] if slopes[-2] != 0 else np.inf
+        "previous_slope": slopes[0],
+        "current_slope": slopes[1],
+        "delta": slopes[1] - slopes[0],
     }
 
 # -----------------------------------------------------
-# Process each server + disk
+# approximate calculation for estimated fill time
 # -----------------------------------------------------
+def time_to_full(current_usage, current_slope):
+    # If the slope is very small or negative → it won't fill
+    if current_slope <= 0.0001:
+        return None
 
-results = []
+    # Percentage remaining until 100%
+    remaining = 100 - current_usage
+
+    # Approximate hours (each sample = 5 minutes → 12 samples/hour)
+    hours = (remaining / current_slope) / 12
+    return hours
+
+# -----------------------------------------------------
+# process each server + disk
+# -----------------------------------------------------
+alerts = []
 
 for (server, disk), group in df.groupby(["server", "disk"]):
 
-    trend = analyze_trend(group)
-
-    if trend is None:
+    result = analyze_trend(group)
+    if result is None:
         continue
 
-    results.append({
+    previous_slope = result["previous_slope"]
+    current_slope = result["current_slope"]
+
+    # only real increasing trends
+    if current_slope <= 0.05:   # minimum threshold → ignore noise
+        continue
+
+    current_usage = group["usage"].iloc[-1]
+    hours = time_to_full(current_usage, current_slope)
+
+    alerts.append({
         "server": server,
         "disk": disk,
-        "breaks": trend["breaks"],
-        "slope_prev": trend["slopes"][0],
-        "slope_now": trend["slopes"][1],
-        "slope_change": trend["slope_change"],
-        "slope_ratio": trend["slope_ratio"]
+        "current_usage": current_usage,
+        "previous_slope": previous_slope,
+        "current_slope": current_slope,
+        "delta": result["delta"],
+        "hours_to_full": hours,
+        "breaks": result["breaks"]
     })
 
-# Display results
-print("\n=== TREND ANALYSIS RESULTS ===")
-for r in results:
-    print(f"\nServer: {r['server']}  Disk: {r['disk']}")
-    print(f"  Segment 1 slope: {r['slope_prev']:.4f}")
-    print(f"  Segment 2 slope: {r['slope_now']:.4f}")
-    print(f"  Slope change: {r['slope_change']:.4f}")
-    print(f"  Ratio: {r['slope_ratio']:.2f}x")
-    print(f"  Breakpoints (trend change): {r['breaks']}")
+
+# -----------------------------------------------------
+# show only real ALERTS
+# -----------------------------------------------------
+print("\n=== INCREASING TREND ALERTS ===\n")
+
+if not alerts:
+    print("No disks with significant growth.\n")
+    exit(0)
+
+for a in alerts:
+    print(f"Server: {a['server']}  |  Disk: {a['disk']}")
+    print(f"  Current usage: {a['current_usage']:.2f}%")
+    print(f"  Current slope: {a['current_slope']:.4f} % per sample")
+    print(f"  Trend change (delta): {a['delta']:.4f}")
+    print(f"  Breakpoints: {a['breaks']}")
+
+    if a["hours_to_full"] is None:
+        print("  Estimated time to full: Not applicable (weak growth)\n")
+    else:
+        hours = a["hours_to_full"]
+        days = hours / 24
+
+        now = datetime.datetime.now()
+        full_date = now + datetime.timedelta(hours=hours)
+
+        formatted_date = full_date.strftime("%Y-%m-%d %H:%M")
+
+        print(f"  Estimated time: {hours:.2f} hours  (fills on {formatted_date})\n")
  
