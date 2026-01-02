@@ -11,7 +11,7 @@ from io import StringIO
 # -----------------------------------------------------
 cmd = [
     "sqlite3",
-    "/usr/lib/nagios/plugins/nagioscfg/dbs/infra.db",
+    "/dbs/infra.db",
     "select * from discos"
 ]
 
