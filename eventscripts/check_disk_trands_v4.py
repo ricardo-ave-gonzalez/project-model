@@ -1,4 +1,4 @@
-#!/opt/prisma/pythonServiciosTI/virtualEnvironments/venv_trend/bin/python3
+#!/../virtualEnvironments/venv_trend/bin/python3
 
 import sqlite3
 import numpy as np
