@@ -179,7 +179,6 @@ Final system structure
     └── clean_infra_*.csv    ← CSVs normalizados listo para importarse
 ```
 
-🔮 Recommended next steps
 
 Add indexes (host, disk, timestamp) for faster historical queries
 Implement a trend-prediction function (simple linear regression)
