@@ -540,7 +540,7 @@ for alerta in alertas:
             f"entre {alerta['detalle']['inicio']} y {alerta['detalle']['fin']}"
         )
 
-        # 👉 agregado: tiempo estimado
+        # agregado: tiempo estimado
         if alerta.get("horas") is None:
             print("  Tiempo estimado: No aplica\n")
         else:
