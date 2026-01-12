@@ -5,7 +5,7 @@
 # ==============================
 DEBUG=2
 DBGF=$(basename "$0")
-DBGFL="/opt/prisma/logsscripts/${DBGF}.debug"
+DBGFL="/var/log/logsscripts/${DBGF}.debug"
 
 log() {
     [[ "$DEBUG" -ge 1 ]] && \
