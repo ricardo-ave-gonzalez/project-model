@@ -5,7 +5,7 @@
 # ==============================
 DEBUG=2
 DBGF=$(basename "$0")
-DBGFL="/tmp/${DBGF}.debug"
+DBGFL="/opt/prisma/logsscripts/${DBGF}.debug"
 
 log() {
     [[ "$DEBUG" -ge 1 ]] && \
@@ -19,11 +19,11 @@ log "Inicio extractor_infra CHMK"
 # ==============================
 INTEGRACION="chmk"
 
-CSV_SRC="/dbs/nagios.discos"
-CSV_OUT="/dbs/csv/infra_${INTEGRACION}.csv"
-CLEAN="/dbs/csv/clean.csv"
+CSV_SRC="/usr/lib/nagios/plugins/nagioscfg/dbs/nagios.discos"
+CSV_OUT="/usr/lib/nagios/plugins/nagioscfg/dbs/csv/infra_${INTEGRACION}.csv"
+CLEAN="/opt/prisma/logsscripts/clean.csv"
 
-DB="/dbs/infra.db"
+DB="/usr/lib/nagios/plugins/nagioscfg/dbs/infra.db"
 TABLE="discos"
 
 TS=$(date +"%Y-%m-%dT%H:%M:%S")
